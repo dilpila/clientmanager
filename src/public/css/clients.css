@@ -1,0 +1,21 @@
+div.dataTables_processing {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 250px !important;
+    height: 50px !important;
+    margin-left: -125px !important;
+    margin-top: -15px !important;
+    padding: 14px 0 2px 0 !important;
+    border: 1px solid #e2b709 !important;
+    border-radius: 5px !important;
+    -webkit-border-radius: 5px !important;
+    -moz-border-radius: 5px !important;
+    text-align: center !important;
+    color: #999 !important;
+    font-size: 115% !important;
+    background: #ffe57e !important;
+    -moz-box-shadow: 0px 5px 90px #888 !important;
+    -webkit-box-shadow: 0px 5px 90px #888 !important;
+    box-shadow: 0px 5px 90px #888 !important;
+}

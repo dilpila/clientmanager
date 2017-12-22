@@ -1,0 +1,52 @@
+{
+    "name": "dilpila/clientmanager",
+    "type": "library",
+    "description": "Laravel 5 package",
+    "keywords": [
+        "pila",
+        "clientmanager",
+        "laravel5",
+        "package"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dil Krishna Pila Shrestha",
+            "email": "dilkrishnapila@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/support": "~5.1",
+        "illuminate/html": "5.*",
+        "php" : "~5.5|~7.0",
+        "wilgucki/csv": "^0.5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "4.*",
+        "scrutinizer/ocular": "~1.1",
+        "squizlabs/php_codesniffer": "~2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pila\\ClientManager\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pila\\ClientManager\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Wilgucki\\Csv\\CsvServiceProvider"
+            ]
+        }
+    }
+}
