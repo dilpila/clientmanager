@@ -6,7 +6,7 @@
         <section class="content-header">
             <h1>
                 Clients
-                <small>Create</small>
+                <small>Edit</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Clients</a></li>
@@ -36,7 +36,7 @@
                                         class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em>
                             </div>
                         @endif
-                        <form role="form" id="clientForm" action=" {{ URL::route('pila::clients::save') }}"
+                        <form role="form" id="clientForm" action="{{ route('pila::clients::save', $client['id']) }}"
                               method="post" novalidate>
 
                             {{ csrf_field() }}
@@ -45,8 +45,7 @@
                                     <label for="Name">{{ trans('clientmanager::clients.name') }}
                                         <div class="error"></div>
                                     </label>
-                                    <input type="text" class="form-control" id="name" name="name"
-                                           value="{{old('name')}}"
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ $client[0] }}"
                                            placeholder="Enter Name" required>
                                 </div>
                                 <div class="form-group">
@@ -56,20 +55,19 @@
 
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="gender" id="gender"
-                                                   value="male" {{ (old('gender') == 'male')?'checked':'' }}>
+                                            <input type="radio" name="gender" id="gender" value="male" {{ ($client[1] == 'male')?'checked':'' }}>
                                             Male
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="gender" id="gender" value="female" {{ (old('gender') == 'female')?'checked':'' }}>
+                                            <input type="radio" name="gender" id="gender" value="female" {{ ($client[1] == 'female')?'checked':'' }}>
                                             Female
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="gender" id="gender" value="other" {{ (old('gender') == 'other')?'checked':'' }}>
+                                            <input type="radio" name="gender" id="gender" value="other" {{ ($client[1] == 'other')?'checked':'' }}>
                                             Other
                                         </label>
                                     </div>
@@ -83,7 +81,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-phone"></i>
                                         </div>
-                                        <input type="text" class="form-control" name="phone" required {{ old('phone') }}
+                                        <input type="text" class="form-control" name="phone" required value="{{$client[2]}}"
                                                data-inputmask="'mask': ['999-9999-999999', '+099 9999 999999']"
                                                data-mask="">
                                     </div>
@@ -94,7 +92,7 @@
                                     <label for="Email">{{ trans('clientmanager::clients.email') }}
                                         <div class="error"></div>
                                     </label>
-                                    <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}"
+                                    <input type="email" class="form-control" id="email" name="email" value="{{$client[3]}}"
                                            placeholder="Enter Email" required>
                                 </div>
 
@@ -102,7 +100,7 @@
                                     <label for="Address">{{ trans('clientmanager::clients.address') }}
                                         <div class="error"></div>
                                     </label>
-                                    <input type="text" class="form-control" id="address" name="address" value="{{ old('address') }}"
+                                    <input type="text" class="form-control" id="address" name="address" value="{{$client[4]}}"
                                            placeholder="Enter Address" required>
                                 </div>
 
@@ -110,7 +108,7 @@
                                     <label for="Nationality">{{ trans('clientmanager::clients.nationality') }}
                                         <div class="error"></div>
                                     </label>
-                                    <input type="text" class="form-control" id="nationality" name="nationality"  value="{{ old('nationality') }}"
+                                    <input type="text" class="form-control" id="nationality" name="nationality" value="{{$client[5]}}"
                                            placeholder="Enter Nationality" required>
                                 </div>
 
@@ -123,7 +121,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="date" class="form-control" id="dob" name="dob" value="{{ old('dob') }}"
+                                        <input type="date" class="form-control" id="dob" name="dob" value="{{$client[6]}}"
                                                placeholder="Enter Date of birth" data-inputmask="'alias': 'mm/dd/yyyy'"
                                                data-mask required>
                                     </div>
@@ -134,7 +132,7 @@
                                     <label for="Education">{{ trans('clientmanager::clients.education') }}
                                         <div class="error"></div>
                                     </label>
-                                    <input type="text" class="form-control" id="education" name="education" value="{{ old('education') }}"
+                                    <input type="text" class="form-control" id="education" name="education" value="{{$client[7]}}"
                                            placeholder="Enter Education Background" required>
                                 </div>
 
@@ -145,20 +143,20 @@
 
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="preffered" id="preffered-1" value="email" {{ (old('preffered') == 'email')?'checked':'' }}
+                                            <input type="radio" name="preffered" id="preffered-1" value="email" {{ ($client[8] == 'email')?'checked':'' }}
                                                    checked="">
                                             Email
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="preffered" id="preffered-2" value="phone" {{ (old('preffered') == 'phone')?'checked':'' }}>
+                                            <input type="radio" name="preffered" id="preffered-2" value="phone" {{ ($client[8] == 'phone')?'checked':'' }}>
                                             Phone
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="preffered" id="preffered-3" value="none" {{ (old('preffered') == 'none')?'checked':'' }}>
+                                            <input type="radio" name="preffered" id="preffered-3" value="none" {{ ($client[8] == 'none')?'checked':'' }}>
                                             None
                                         </label>
                                     </div>

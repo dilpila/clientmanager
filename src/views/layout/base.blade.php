@@ -9,15 +9,17 @@
 
     @section('head_style')
         <link rel="stylesheet" href="{{ URL::asset('assets/pila/client/bootstrap/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ URL::asset('assets/pila/client/vendor/css/font-awesome.min.css') }}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="{{ URL::asset('assets/pila/client/vendor/css/ionicons.min.css') }}">
         <link rel="stylesheet" href="{{ URL::asset('assets/pila/client/dist/css/AdminLTE.min.css') }}">
         <link rel="stylesheet" href="{{ URL::asset('') }}assets/pila/client/dist/css/skins/_all-skins.min.css">
         <link rel="stylesheet" href="{{ URL::asset('') }}assets/pila/client/plugins/iCheck/flat/blue.css">
         <link rel="stylesheet" href="{{ URL::asset('') }}assets/pila/client/plugins/morris/morris.css">
-        <link rel="stylesheet" href="{{ URL::asset('') }}assets/pila/client/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+        <link rel="stylesheet"
+              href="{{ URL::asset('') }}assets/pila/client/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
         <link rel="stylesheet" href="{{ URL::asset('') }}assets/pila/client/plugins/datepicker/datepicker3.css">
-        <link rel="stylesheet" href="{{ URL::asset('') }}assets/pila/client/plugins/daterangepicker/daterangepicker-bs3.css">
+        <link rel="stylesheet"
+              href="{{ URL::asset('') }}assets/pila/client/plugins/daterangepicker/daterangepicker-bs3.css">
     @show
 
     @section('head_script')
@@ -34,13 +36,13 @@
     <!-- Left side column. contains the logo and sidebar -->
     <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
-        @include('pila.client.layout.common.sidebar')
-                <!-- /.sidebar -->
+    @include('pila.client.layout.common.sidebar')
+    <!-- /.sidebar -->
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
-    @yield('content')
-            <!-- Content Header (Page header) -->
+@yield('content')
+<!-- Content Header (Page header) -->
 
     <!-- /.content -->
 </div>

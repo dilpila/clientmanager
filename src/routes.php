@@ -1,7 +1,6 @@
 <?php
 
-Route::group(['namespace' => 'Pila\ClientManager\Controllers', 'as' => 'pila::', 'prefix' => 'clients', 'middleware' => 'web'], function ()
-{
+Route::group(['namespace' => 'Pila\ClientManager\Controllers', 'as' => 'pila::', 'prefix' => 'clients', 'middleware' => 'web'], function () {
     Route::group(['as' => 'clients::'], function () {
         Route::get('/', [
             'as' => 'index',
@@ -13,7 +12,12 @@ Route::group(['namespace' => 'Pila\ClientManager\Controllers', 'as' => 'pila::',
             'uses' => 'ClientController@create'
         ]);
 
-        Route::post('/save', [
+        Route::get('/edit/{id}', [
+            'as' => 'edit',
+            'uses' => 'ClientController@edit'
+        ]);
+
+        Route::post('/save/{id?}', [
             'as' => 'save',
             'uses' => 'ClientController@save'
         ]);
@@ -21,6 +25,11 @@ Route::group(['namespace' => 'Pila\ClientManager\Controllers', 'as' => 'pila::',
         Route::get('/list', [
             'as' => 'list',
             'uses' => 'ClientController@listAll'
+        ]);
+
+        Route::get('/delete/{id}', [
+            'as' => 'delete',
+            'uses' => 'ClientController@delete'
         ]);
     });
 });
