@@ -48,7 +48,8 @@
                 {data: "address"},
                 {data: "nationality"},
                 {data: "dob"},
-                {data: "preffered"}
+                {data: "preffered"},
+                {data: "actions"}
             ],
             columnDefs: [
                 {visible: false, targets: [0]},

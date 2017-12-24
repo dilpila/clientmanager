@@ -24,12 +24,24 @@ class ClientController extends BaseController
 
     public function index(Request $request)
     {
+
         return view('pila.client.index');
     }
 
-    public function create()
+    public function create(Request $request, $id = null)
     {
-        return view('pila.client.add');
+        $records = $this->getClients();
+
+        $data = [];
+
+        if ($id) {
+            foreach ($records as $key => $record) {
+                if ($record[9] == $id) {
+                    $data = $record;
+                }
+            }
+        }
+        return view('pila.client.add', ['client' => $data]);
     }
 
     /**
@@ -56,27 +68,50 @@ class ClientController extends BaseController
                 ->withInput();
         }
 
-        $csvPath = resource_path('pila/client/csv/clients.csv');
-
-        $reader = Reader::open($csvPath);
+        $reader = Reader::open($this->csvPath());
         $records = $reader->readAll();
+        $clients = [];
+
+        foreach ($records as $key => $record) {
+            $clients[$record[0]] = explode('/', $record[1]);
+            $clients[$record[0]]['parent'] = $key;
+        }
 
         $count = count($records);
-        $writer = CsvWriter::create($csvPath);
+        $writer = CsvWriter::create($this->csvPath());
 
         $input = Input::except('_token', 'submitBtn');
-        $data = implode('/', $input);
 
-        $writer->writeLine([$count + 1, $data]);
+        if ($id) {
+            foreach ($clients as $key => $client) {
+                if ($client[9] == $id) {
+                    unset($records[$client['parent']]);
+
+                    $input[] = $id;
+                    $data = implode('/', $input);
+                    $writer->writeLine([$key, $data]);
+                }
+            }
+
+        } else {
+            $input[] = time();
+            $data = implode('/', $input);
+
+            $writer->writeLine([$count + 1, $data]);
+        }
+
         $writer->writeAll($records);
 
         $writer->flush();
         $writer->close();
 
-        Log::info('Client was successfully');
-        $request->session()->flash('flash_message', 'Client has been successful added!');
+        if ($id) {
+            $request->session()->flash('flash_message', 'Client has been successfully updated');
+        } else {
+            $request->session()->flash('flash_message', 'Client has been successfully added');
+        }
 
-        return redirect('clients/create');
+        return redirect('clients');
     }
 
     /**
@@ -89,6 +124,7 @@ class ClientController extends BaseController
         }
 
         $clients = $this->getClients();
+
         $total_count = count($clients);
 
         $limit = $this->getLimit($request);
@@ -118,9 +154,8 @@ class ClientController extends BaseController
             $data[$i]['dob'] = $client[7];
             $data[$i]['preffered'] = $client[8];
             $data[$i]['actions'] = '<div class="btn-group">
-            <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
-            <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
-            <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a>
+            <a class="btn btn-primary btn-sm" href="' . url('clients/save/' . $client[9]) . '"><i class="icon_plus_alt2"></i>edit</a>
+            <a class="btn btn-danger btn-sm" href="' . url('clients/delete/' . $client[9]) . '"><i class="icon_close_alt2"></i>Delete</a>
         </div>';
 
             $i++;
@@ -134,13 +169,41 @@ class ClientController extends BaseController
         ));
     }
 
+    public function delete(Request $request, $id)
+    {
+        $reader = Reader::open($this->csvPath());
+        $records = $reader->readAll();
+        $clients = [];
+
+        foreach ($records as $key => $record) {
+            $clients[$record[0]] = explode('/', $record[1]);
+            $clients[$record[0]]['parent'] = $key;
+        }
+
+        $writer = CsvWriter::create($this->csvPath());
+        if ($id) {
+            foreach ($clients as $key => $client) {
+                if ($client[9] == $id) {
+                    unset($records[$client['parent']]);
+                }
+            }
+
+        }
+        $writer->writeAll($records);
+
+        $writer->flush();
+        $writer->close();
+        $request->session()->flash('flash_message', 'Client has been successfully deleted.');
+
+        return redirect('clients');
+    }
+
+
     protected function getClients()
     {
         $clients = array();
 
-        $csvPath = resource_path('pila/client/csv/clients.csv');
-
-        $reader = Reader::open($csvPath);
+        $reader = Reader::open($this->csvPath());
         $records = $reader->readAll();
 
         foreach ($records as $record) {
@@ -185,8 +248,11 @@ class ClientController extends BaseController
         return array_slice($array, $offset, $limit);
     }
 
-    protected function getValidation()
+    protected function csvPath()
     {
+        $csvPath = resource_path('pila/client/csv/clients.csv');
+        return $csvPath;
 
     }
+
 }

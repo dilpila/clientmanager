@@ -8,12 +8,12 @@ Route::group(['namespace' => 'Pila\ClientManager\Controllers', 'as' => 'pila::',
             'uses' => 'ClientController@index'
         ]);
 
-        Route::get('/create', [
+        Route::get('/save/{id?}', [
             'as' => 'create',
             'uses' => 'ClientController@create'
         ]);
 
-        Route::post('/save', [
+        Route::post('/save/{id?}', [
             'as' => 'save',
             'uses' => 'ClientController@save'
         ]);
@@ -21,6 +21,11 @@ Route::group(['namespace' => 'Pila\ClientManager\Controllers', 'as' => 'pila::',
         Route::get('/list', [
             'as' => 'list',
             'uses' => 'ClientController@listAll'
+        ]);
+
+        Route::get('/delete/{id}', [
+            'as' => 'delete',
+            'uses' => 'ClientController@delete'
         ]);
     });
 });
